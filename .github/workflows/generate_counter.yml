@@ -1,0 +1,25 @@
+name: Generate Counter File
+
+on:
+  push:
+    branches:
+      - main # Change this to the branch you want to trigger the workflow on
+
+jobs:
+  generate_counter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run generate_counter.js
+        run: node generate_counter.js
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add counter.txt
+          git commit -m "Increment counter"
+          git push
